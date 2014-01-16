@@ -1,0 +1,191 @@
+#include <iostream>
+#include <string>
+#include <windows.h>
+#include <math.h>
+#include <cstdlib>
+#include <time.h>
+class Player {
+public:
+    std::string Cards[2];
+    float Money;
+    Player() {
+        Cards[0] = ""; // Reset Cards
+        Cards[1] = "";
+        Money = 100.0; // Reset Money
+    }
+    void Setcards(){
+        int X = (rand()% 52);
+        Cards[0] = Deck[X];
+        X = (rand()% 52);
+        Cards[1] = Deck[X];
+    }
+    void AfterBets(float Bet){
+        Money = Money - Bet;
+    }
+};
+
+class Pot {
+public:
+    std::string Cards[5];
+    float Money;
+    Pot(){
+        Cards[0] = ""; // Reset Cards
+        Cards[1] = "";
+        Cards[2] = "";
+        Cards[3] = "";
+        Cards[4] = "";
+        Money = 0.0; // Reset Money
+    }
+    void Bets(){
+        std::cout << "How much would you like to bet?\n";
+        float Bet;
+        std::cin >> Bet;
+        Money = Money + Bet;
+        Plyr1.AfterBets(Bet);
+        Plyr2.AfterBets(Bet);
+    }
+};
+void ClearScreen() {
+  HANDLE                     hStdOut;
+  CONSOLE_SCREEN_BUFFER_INFO csbi;
+  DWORD                      count;
+  DWORD                      cellCount;
+  COORD                      homeCoords = { 0, 0 };
+
+  hStdOut = GetStdHandle( STD_OUTPUT_HANDLE );
+  if (hStdOut == INVALID_HANDLE_VALUE) return;
+
+  /* Get the number of cells in the current buffer */
+  if (!GetConsoleScreenBufferInfo( hStdOut, &csbi )) return;
+  cellCount = csbi.dwSize.X *csbi.dwSize.Y;
+
+  /* Fill the entire buffer with spaces */
+  if (!FillConsoleOutputCharacter(
+    hStdOut,
+    (TCHAR) ' ',
+    cellCount,
+    homeCoords,
+    &count
+    )) return;
+
+  /* Fill the entire buffer with the current colors and attributes */
+  if (!FillConsoleOutputAttribute(
+    hStdOut,
+    csbi.wAttributes,
+    cellCount,
+    homeCoords,
+    &count
+    )) return;
+
+  /* Move the cursor home */
+  SetConsoleCursorPosition( hStdOut, homeCoords );
+  }
+int main()
+{
+    // Set up Players/Pot
+    Player Plyr1, Plyr2;
+    Pot ThePot;
+    // Backend variables
+    int Opt = 0;
+    int OOpt = 0;
+    char a[4] = {3,4,5,6};
+    srand(time(NULL));
+    while(true) {
+        std::cout << "A"<<a[3];;
+        std::cout << "Welcome to Texas Hold'em!\n"; // Main Menu
+        std::cout << "[1] Play Game\n";
+        std::cout << "[2] Options\n";
+        std::cout << "[3] Quit\n";
+        std::cin >> Opt;
+        if(Opt > 3) Opt = 3;
+        if(Opt < 0) Opt = 0;
+        if(Opt == 1) {
+            ClearScreen();
+            while(true) {
+                Deck[52][2] = {
+                // Spades
+                {("A"<<a[3]), "false"},
+                {"2" += Sym[3], "false"},
+                {"3" += Sym[3], "false"},
+                {"4" += Sym[3], "false"},
+                {"5" += Sym[3], "false"},
+                {"6" += Sym[3], "false"},
+                {"7" += Sym[3], "false"},
+                {"8" += Sym[3], "false"},
+                {"9" += Sym[3], "false"},
+                {"10" += Sym[3], "false"},
+                {"J" += Sym[3], "false"},
+                {"Q" += Sym[3], "false"},
+                {"K" += Sym[3], "false"},
+                // Hearts
+                {"AH", "false"},
+                {"2♥", "false"},
+                {"3♥", "false"},
+                {"4♥", "false"},
+                {"5♥", "false"},
+                {"6♥", "false"},
+                {"7♥", "false"},
+                {"8♥", "false"},
+                {"9♥", "false"},
+                {"10♥", "false"},
+                {"J♥", "false"},
+                {"Q♥", "false"},
+                {"K♥", "false"},
+                // Diamonds
+                {"AD", "false"},
+                {"2♦", "false"},
+                {"3♦", "false"},
+                {"4♦", "false"},
+                {"5♦", "false"},
+                {"6♦", "false"},
+                {"7♦", "false"},
+                {"8♦", "false"},
+                {"9♦", "false"},
+                {"10♦", "false"},
+                {"J♦", "false"},
+                {"Q♦", "false"},
+                {"K♦", "false"},
+                // Hearts
+                {"AC", "false"},
+                {"2♣", "false"},
+                {"3♣", "false"},
+                {"4♣", "false"},
+                {"5♣", "false"},
+                {"6♣", "false"},
+                {"7♣", "false"},
+                {"8♣", "false"},
+                {"9♣", "false"},
+                {"10♣", "false"},
+                {"J♣", "false"},
+                {"Q♣", "false"},
+                {"K♣", "false"}
+                };
+                std::cout << Deck[20][0];
+                Plyr1.SetCards();
+                Plyr2.Setcards();
+                Plyr1.Bets();
+                Plyr2.Bets();
+            }
+            // TODO: Play Game
+        } else if(Opt == 2) {
+            while(true){ //Options
+                ClearScreen();
+                std::cout << "Texas Hold'em [Options]\n";
+                std::cout << "[1] Set Starting amount of money\n";
+                std::cout << "[2] Exit Menu\n";
+                std::cin >> OOpt;
+                if(OOpt > 2) OOpt = 2;
+                if(OOpt < 0) OOpt = 0;
+                if(OOpt == 1) {
+                    // TODO: Set Starting Amount
+                } else if(OOpt == 2) {
+                    ClearScreen();
+                    break;
+                }
+            }
+        } else if(Opt == 3) {
+            break;
+        }
+    }
+    return 0;
+}
